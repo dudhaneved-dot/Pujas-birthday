@@ -8,8 +8,8 @@
 <style>
 body{
     margin:0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg,#ffe6f0,#ffd1dc);
+    font-family:'Poppins', sans-serif;
+    background:linear-gradient(135deg,#ffe6f0,#ffd1dc);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -75,14 +75,14 @@ p{
     to{opacity:1;transform:scale(1);}
 }
 
-/* Floating hearts */
-.heart{
+/* Floating celebration elements */
+.float{
     position:absolute;
-    font-size:18px;
-    animation:float 6s infinite;
+    font-size:20px;
+    animation:floatUp 6s infinite;
 }
 
-@keyframes float{
+@keyframes floatUp{
     0%{transform:translateY(0);opacity:1;}
     100%{transform:translateY(-800px);opacity:0;}
 }
@@ -111,22 +111,22 @@ p{
     <button class="btn" onclick="nextScreen(3)">Next 💕</button>
 </div>
 
-<!-- SCREEN 3 -->
+<!-- SCREEN 3 (FIX 1) -->
 <div class="card hidden" id="screen3">
-    <h1>Do you wanna see what I made for her? 👀✨</h1>
+    <h1>Do you wanna see what I made for you? 👀✨</h1>
     <button class="btn" onclick="nextScreen(4)">Yes! 💖</button>
     <button class="btn alt" onclick="alert('No is not allowed 😌')">No</button>
 </div>
 
-<!-- SCREEN 4 -->
+<!-- SCREEN 4 (FIX 2) -->
 <div class="card hidden" id="screen4">
-    <h1>Have a look at it, Madam Puja 💃✨</h1>
+    <h1>Have a look at it, Madam jii 💃✨</h1>
     <button class="btn" onclick="nextScreen('Message')">Let’s Go 🎊</button>
 </div>
 
 <!-- SPECIAL MESSAGE SCREEN -->
 <div class="card hidden" id="screenMessage">
-    <h1>A Special Message for Her 💌</h1>
+    <h1>A Special Message for You 💌</h1>
     <p style="font-size:15px; line-height:1.6;">
         Dear Puja,<br><br>
 
@@ -143,10 +143,10 @@ p{
     <button class="btn" onclick="nextScreen(5)">Continue 🎉</button>
 </div>
 
-<!-- SCREEN 5 -->
+<!-- SCREEN 5 (FIX 3) -->
 <div class="card hidden" id="screen5">
-    <h1>🎊 It’s Celebration Time 🎊</h1>
-    <p>This moment is all hers 💕</p>
+    <h1>🎊 It’s Time to Celebrate 🎊</h1>
+    <p><b>Bali chya poricha birthday, YEYYY 🥱🩷</b></p>
     <button class="btn" onclick="celebrate()">Turn on the lights 💡</button>
 </div>
 
@@ -158,19 +158,14 @@ function nextScreen(num){
     ).classList.remove('hidden');
 }
 
-/* Birthday countdown – 24 December, 12:00 AM */
+/* Countdown: 24 December, 12:00 AM */
 const birthday = new Date(new Date().getFullYear(), 11, 24, 0, 0, 0);
 
 setInterval(() => {
     const now = new Date();
     const diff = birthday - now;
 
-    if (diff <= 0) {
-        document.getElementById("hours").innerText = "00";
-        document.getElementById("minutes").innerText = "00";
-        document.getElementById("seconds").innerText = "00";
-        return;
-    }
+    if (diff <= 0) return;
 
     document.getElementById("hours").innerText =
         Math.floor(diff / (1000 * 60 * 60));
@@ -180,16 +175,17 @@ setInterval(() => {
         Math.floor((diff / 1000) % 60);
 }, 1000);
 
-/* Celebration hearts */
+/* Celebration effects (FIX 4) */
 function celebrate(){
-    for(let i=0;i<35;i++){
-        let heart=document.createElement("div");
-        heart.className="heart";
-        heart.innerText="💖";
-        heart.style.left=Math.random()*100+"vw";
-        heart.style.bottom="-20px";
-        document.body.appendChild(heart);
-        setTimeout(()=>heart.remove(),6000);
+    const items = ["🎈","🩷","❤️","💌","🎈","🩷","❤️"];
+    for(let i=0;i<45;i++){
+        let el=document.createElement("div");
+        el.className="float";
+        el.innerText=items[Math.floor(Math.random()*items.length)];
+        el.style.left=Math.random()*100+"vw";
+        el.style.bottom="-20px";
+        document.body.appendChild(el);
+        setTimeout(()=>el.remove(),6000);
     }
 }
 </script>
