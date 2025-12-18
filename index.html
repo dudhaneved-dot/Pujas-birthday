@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Happy Birthday 🎉</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    h1 { font-size: 2.5em; }
+    #timer { font-size: 1.5em; margin: 20px 0; }
+    .msg {
+      max-width: 500px;
+      margin: auto;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Happy Birthday 🎂</h1>
+<p id="timer">Loading...</p>
+
+<div class="msg">
+  <p>
+    Wishing you a year full of happiness,
+    success, and beautiful moments.
+    Thank you for being amazing ❤️
+  </p>
+</div>
+
+<script>
+  const birthday = new Date("2025-12-24T00:00:00").getTime();
+
+  setInterval(() => {
+    const now = new Date().getTime();
+    const diff = birthday - now;
+
+    if (diff <= 0) {
+      document.getElementById("timer").innerHTML =
+        "🎉 It's your birthday! 🎉";
+      return;
+    }
+
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("timer").innerHTML =
+      `${d} days ${h} hrs ${m} min ${s} sec left`;
+  }, 1000);
+</script>
+
+</body>
+</html>
