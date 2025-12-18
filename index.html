@@ -1,59 +1,197 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Happy Birthday 🎉</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      background: #111;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px 20px;
-    }
-    h1 { font-size: 2.5em; }
-    #timer { font-size: 1.5em; margin: 20px 0; }
-    .msg {
-      max-width: 500px;
-      margin: auto;
-      line-height: 1.6;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Puja’s Birthday 🎂</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg,#ffe6f0,#ffd1dc);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+}
+
+.card{
+    background:#fff;
+    border-radius:22px;
+    padding:28px;
+    width:90%;
+    max-width:360px;
+    text-align:center;
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+    animation:fade 1s ease;
+}
+
+h1{
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+p{
+    font-size:14px;
+    color:#555;
+}
+
+.btn{
+    margin-top:18px;
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    font-size:15px;
+    color:#fff;
+    background:#ff4d6d;
+    cursor:pointer;
+}
+
+.btn.alt{
+    background:#7b2cbf;
+}
+
+.countdown{
+    display:flex;
+    justify-content:space-around;
+    margin-top:15px;
+}
+
+.time{
+    background:#ffe6f0;
+    padding:10px;
+    border-radius:12px;
+    width:70px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.hidden{display:none;}
+
+@keyframes fade{
+    from{opacity:0;transform:scale(0.9);}
+    to{opacity:1;transform:scale(1);}
+}
+
+/* Floating hearts */
+.heart{
+    position:absolute;
+    font-size:18px;
+    animation:float 6s infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(0);opacity:1;}
+    100%{transform:translateY(-800px);opacity:0;}
+}
+</style>
 </head>
+
 <body>
 
-<h1>Happy Birthday 🎂</h1>
-<p id="timer">Loading...</p>
+<!-- SCREEN 1 -->
+<div class="card" id="screen1">
+    <h1>Counting down to <span style="color:#ff4d6d;">Puja’s</span> special day 🎂</h1>
+    <p>A celebration made just for her 💖</p>
 
-<div class="msg">
-  <p>
-    Wishing you a year full of happiness,
-    success, and beautiful moments.
-    Thank you for being amazing ❤️
-  </p>
+    <div class="countdown">
+        <div class="time"><span id="hours">00</span><br>HRS</div>
+        <div class="time"><span id="minutes">00</span><br>MIN</div>
+        <div class="time"><span id="seconds">00</span><br>SEC</div>
+    </div>
+
+    <button class="btn" onclick="nextScreen(2)">Let’s Celebrate 🎉</button>
+</div>
+
+<!-- SCREEN 2 -->
+<div class="card hidden" id="screen2">
+    <h1>It’s Your Special Day, Puja! ✨</h1>
+    <button class="btn" onclick="nextScreen(3)">Next 💕</button>
+</div>
+
+<!-- SCREEN 3 -->
+<div class="card hidden" id="screen3">
+    <h1>Do you wanna see what I made for her? 👀✨</h1>
+    <button class="btn" onclick="nextScreen(4)">Yes! 💖</button>
+    <button class="btn alt" onclick="alert('No is not allowed 😌')">No</button>
+</div>
+
+<!-- SCREEN 4 -->
+<div class="card hidden" id="screen4">
+    <h1>Have a look at it, Madam Puja 💃✨</h1>
+    <button class="btn" onclick="nextScreen('Message')">Let’s Go 🎊</button>
+</div>
+
+<!-- SPECIAL MESSAGE SCREEN -->
+<div class="card hidden" id="screenMessage">
+    <h1>A Special Message for Her 💌</h1>
+    <p style="font-size:15px; line-height:1.6;">
+        Dear Puja,<br><br>
+
+        This little corner of the internet was made just for you.<br>
+        Every smile of yours matters, every dream of yours is special,
+        and today is all about celebrating <b>you</b>.<br><br>
+
+        May this year bring you happiness, confidence, success,
+        and moments that make you feel truly loved.<br><br>
+
+        <b>Happy Birthday, Bali chi porgi 😂🩷</b>
+    </p>
+
+    <button class="btn" onclick="nextScreen(5)">Continue 🎉</button>
+</div>
+
+<!-- SCREEN 5 -->
+<div class="card hidden" id="screen5">
+    <h1>🎊 It’s Celebration Time 🎊</h1>
+    <p>This moment is all hers 💕</p>
+    <button class="btn" onclick="celebrate()">Turn on the lights 💡</button>
 </div>
 
 <script>
-  const birthday = new Date("2025-12-24T00:00:00").getTime();
+function nextScreen(num){
+    document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+    document.getElementById(
+        typeof num === "number" ? "screen" + num : "screen" + num
+    ).classList.remove('hidden');
+}
 
-  setInterval(() => {
-    const now = new Date().getTime();
+/* Birthday countdown – 24 December, 12:00 AM */
+const birthday = new Date(new Date().getFullYear(), 11, 24, 0, 0, 0);
+
+setInterval(() => {
+    const now = new Date();
     const diff = birthday - now;
 
     if (diff <= 0) {
-      document.getElementById("timer").innerHTML =
-        "🎉 It's your birthday! 🎉";
-      return;
+        document.getElementById("hours").innerText = "00";
+        document.getElementById("minutes").innerText = "00";
+        document.getElementById("seconds").innerText = "00";
+        return;
     }
 
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const m = Math.floor((diff / (1000 * 60)) % 60);
-    const s = Math.floor((diff / 1000) % 60);
+    document.getElementById("hours").innerText =
+        Math.floor(diff / (1000 * 60 * 60));
+    document.getElementById("minutes").innerText =
+        Math.floor((diff / (1000 * 60)) % 60);
+    document.getElementById("seconds").innerText =
+        Math.floor((diff / 1000) % 60);
+}, 1000);
 
-    document.getElementById("timer").innerHTML =
-      `${d} days ${h} hrs ${m} min ${s} sec left`;
-  }, 1000);
+/* Celebration hearts */
+function celebrate(){
+    for(let i=0;i<35;i++){
+        let heart=document.createElement("div");
+        heart.className="heart";
+        heart.innerText="💖";
+        heart.style.left=Math.random()*100+"vw";
+        heart.style.bottom="-20px";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),6000);
+    }
+}
 </script>
 
 </body>
